@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { headerLinks } from '@/config/headerLinks'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   theme: ColorScheme
@@ -23,6 +24,19 @@ type Props = {
 const AppHeader = (props: Props) => {
   const { theme, changeTheme, opened, changeOpened } = props
   const router = useRouter()
+  const { locale, locales } = router
+  const t = useTranslations('Header')
+
+  const languages = locales?.map((value) => {
+    return {
+      value: value,
+      label: value === 'zh-Hans' ? '简体中文' : 'English'
+    }
+  })
+
+  const changeLanguage = (language: string) => {
+      router.push(router.pathname, router.pathname, { locale: language })
+  }
   return (
     <Header
       height={64}
@@ -54,8 +68,8 @@ const AppHeader = (props: Props) => {
             if (link.path[0] === '/' && !Array.isArray(link.path)) {
               return (
                 <Link href={link.path} key={link.key}>
-                  <a className="font-nunito inline-block md:w-[72px] text-center">
-                    {link.name}
+                  <a className="font-nunito inline-block md:px-5 text-center">
+                    {t(link.key)}
                   </a>
                 </Link>
               )
@@ -71,8 +85,8 @@ const AppHeader = (props: Props) => {
                   position="bottom"
                 >
                   <Menu.Target>
-                    <span className="flex items-center md:w-[72px] justify-center text-center">
-                      {link.name}
+                    <span className="flex items-center md:px-5 justify-center text-center">
+                      {t(link.key)}
                       <ChevronDown size={16} className="ml-1" />
                     </span>
                   </Menu.Target>
@@ -81,7 +95,7 @@ const AppHeader = (props: Props) => {
                       return (
                         <Menu.Item key={url.key}>
                           <Link href={url.path as string}>
-                            <a className="uppercase">{url.name}示例</a>
+                            <a className="uppercase">{t(url.key)}{t('example')}</a>
                           </Link>
                         </Menu.Item>
                       )
@@ -94,10 +108,10 @@ const AppHeader = (props: Props) => {
                 <a
                   href={link.path}
                   key={link.key}
-                  className="font-raleway inline-block md:w-[72px] text-center"
+                  className="font-raleway inline-block md:px-5 text-center"
                   target="blank"
                 >
-                  {link.name}
+                  {t(link.key)}
                 </a>
               )
             }
@@ -107,10 +121,9 @@ const AppHeader = (props: Props) => {
 
       <div className="h-full flex items-center space-x-4 pr-[9px]">
         <SegmentedControl
-          data={[
-            { label: '简体中文', value: 'zh-Hans' },
-            { label: 'English', value: 'en' }
-          ]}
+          value={locale}
+          onChange={changeLanguage}
+          data={languages || []}
         />
         <ActionIcon
           variant="outline"
