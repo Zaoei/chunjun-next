@@ -1,0 +1,19 @@
+{
+    "Home": {
+      "title": "Chunjun",
+      "quickStart": "Quick Start"
+    },
+    "Header": {
+      "home": "Home",
+      "documents": "Docs",
+      "download": "Download",
+      "resources": "Resource",
+      "contributor": "Contributor",
+      "faq": "Faq",
+      "examples": "Examples",
+      "sql": "SQL",
+      "json": "JSON",
+      "example": ""
+    }
+  }
+  
