@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { GetStaticPropsContext, NextPage } from 'next'
 import {
   Button,
   useMantineColorScheme,
@@ -15,6 +15,7 @@ import Aos from 'aos'
 import { BrandGithub, Affiliate } from 'tabler-icons-react'
 import { companies } from '@/config/companies'
 import AppFooter from '@/components/AppFooter'
+import { useTranslations } from 'next-intl'
 
 const SEP = process.env.sep
 
@@ -22,6 +23,7 @@ const Home: NextPage = () => {
   const { colorScheme } = useMantineColorScheme()
   const [opened, setOpened] = useState<boolean>(false)
   const theme = useMantineTheme()
+  const t = useTranslations('Home');
 
   useEffect(() => {
     Aos.init({
@@ -112,7 +114,7 @@ const Home: NextPage = () => {
                   colorScheme === 'light' ? 'bg-indigo-50' : null
                 } ml-2`}
               >
-                quick start
+                {t('quickStart')}
               </Button>
             </Link>
           </div>
@@ -523,6 +525,14 @@ const Home: NextPage = () => {
       </div>
     </>
   )
+}
+
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  return {
+    props: {
+      messages: (await import(`../i18n/${locale}.json`)).default
+    }
+  };
 }
 
 export default Home
