@@ -8,6 +8,10 @@ const nextConfig = {
     sql: '/chunjun-examples/sql',
     json: '/chunjun-examples/json'
   },
+  i18n: {
+    locales: ['zh-Hans', 'en'],
+    defaultLocale: 'zh-Hans',
+  }
 }
 
 module.exports = nextConfig
