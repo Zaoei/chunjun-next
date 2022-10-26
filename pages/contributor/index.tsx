@@ -4,6 +4,7 @@ import { Card, Text, Avatar, useMantineColorScheme } from '@mantine/core'
 import { useEffect } from 'react'
 import Image from 'next/image'
 import AppFooter from '@/components/AppFooter'
+import { GetStaticPropsContext } from 'next'
 
 const Contributor = () => {
   const { colorScheme } = useMantineColorScheme()
@@ -74,6 +75,14 @@ const Contributor = () => {
       <AppFooter />
     </>
   )
+}
+
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  return {
+    props: {
+      messages: (await import(`../../i18n/${locale}.json`)).default
+    }
+  };
 }
 
 export default Contributor

@@ -1,4 +1,4 @@
-# 如何提交一个优秀的 pr
+# How to submit a great Pull Request
 
 在 github 上提交 pr 是参与 ChunJun 开源项目的一个重要途径，小伙伴们在使用中的一些功能上 feature 或者 bug 都可以向社区提交 pr 贡献代码，也可以根据已有的 issue 提供自己的解决方案。下面给大家带来提交一个优秀 PR 的步骤。
 

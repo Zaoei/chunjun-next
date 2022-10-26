@@ -14,6 +14,11 @@
       "sql": "SQL",
       "json": "JSON",
       "example": ""
+    },
+    "Faq": {
+      "introduction": "Hi, There are some guidelines, you can read it to know more about <t1>Chenjun</t1>，Have a <t2>good time!</t2>",
+      "pr": "How To Submit A Great Pull Request",
+      "plugin": "How To Customize A Plugin"
     }
   }
   

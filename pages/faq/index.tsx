@@ -1,5 +1,5 @@
 import { markdownToHtml } from '@/utils/markdown2html'
-import { getPostBySlug } from '@/api/post-api'
+import { getPostBySlug, LocaleType } from '@/api/post-api'
 import MDFileType from '@/types/MDFile'
 import PostBody from '@/components/PostBody'
 import AppFooter from '@/components/AppFooter'
@@ -13,6 +13,8 @@ import {
 import { BrandGithub, Affiliate } from 'tabler-icons-react'
 import Aos from 'aos'
 import { useEffect } from 'react'
+import { GetStaticPropsContext } from 'next'
+import { useTranslations } from 'next-intl'
 
 const SEP = process.env.sep as string
 
@@ -24,7 +26,7 @@ type Props = {
 const Faq = (props: Props) => {
   const { PR, plugin } = props
   const { colorScheme } = useMantineColorScheme()
-
+  const t = useTranslations('Faq')
   useEffect(() => {
     Aos.init()
   }, [colorScheme])
@@ -36,23 +38,21 @@ const Faq = (props: Props) => {
           data-aos="fade-zoom-in"
           className="px-4 md:py-12 md:text-3xl text-base capitalize md:mb-12 mb-8 font-bold"
         >
-          hi, 你好, 这里是指南,你可以通过阅读我们的指南来了解
-          <span className="underline decoration-purple-500 decoration-wavy md:decoration-4 decoration-2">
-            纯钧
-          </span>
-          ，祝你
-          <span className="underline decoration-green-500 decoration-wavy md:decoration-4 decoration-2">
-            玩得开心!
-          </span>
+          {
+            t.rich('introduction', {
+              t1: (chunks) => <span className="underline decoration-purple-500 decoration-wavy md:decoration-4 decoration-2">{chunks}</span>,
+              t2: (chunks) => <span className="underline decoration-green-500 decoration-wavy md:decoration-4 decoration-2">{chunks}</span>,
+            })
+          }
         </Text>
         <div id="top" className="h-8"></div>
         <Tabs variant="outline" defaultValue="pr" className="mb-8">
           <Tabs.List position="center">
             <Tabs.Tab value="pr" icon={<BrandGithub size={14} />}>
-              如何提交一个优秀的PR
+              {t('pr')}
             </Tabs.Tab>
             <Tabs.Tab value="plugin" icon={<Affiliate size={14} />}>
-              如何自定义插件
+              {t('plugin')}
             </Tabs.Tab>
           </Tabs.List>
 
@@ -86,23 +86,24 @@ const Faq = (props: Props) => {
 
 export default Faq
 
-export const getStaticProps = async () => {
+export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
   const post1 = getPostBySlug(`开发者指南${SEP}如何提交一个优秀的PR`, [
     'slug',
     'content'
-  ])
+  ], locale as LocaleType)
   const md1 = await markdownToHtml(post1.content || '')
 
   const post2 = getPostBySlug(`开发者指南${SEP}如何自定义插件`, [
     'slug',
     'content'
-  ])
+  ], locale as LocaleType)
   const md2 = await markdownToHtml(post2.content || '')
 
   return {
     props: {
       PR: md1,
-      plugin: md2
+      plugin: md2,
+      messages: (await import(`../../i18n/${locale}.json`)).default
     }
   }
 }
