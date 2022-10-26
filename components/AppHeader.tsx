@@ -35,7 +35,8 @@ const AppHeader = (props: Props) => {
   })
 
   const changeLanguage = (language: string) => {
-      router.push(router.pathname, router.pathname, { locale: language })
+    const { pathname, asPath, query } = router
+      router.push({ pathname, query }, asPath, { locale: language })
   }
   return (
     <Header

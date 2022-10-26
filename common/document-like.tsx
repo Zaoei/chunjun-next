@@ -17,7 +17,7 @@ type Props = {
 }
 
 const DocumentLike = (props: Props) => {
-  const { children, target, tree, toc } = props
+  const { children, target, tree = [], toc } = props
 
   const { colorScheme } = useMantineColorScheme()
 
