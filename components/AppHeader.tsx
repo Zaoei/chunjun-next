@@ -9,7 +9,7 @@ import {
 } from '@mantine/core'
 import { Sun, Moon, ChevronDown } from 'tabler-icons-react'
 import Image from 'next/image'
-import { headerLinks } from '@/config/headerLinks'
+import { getLocaleLinkPath, headerLinks } from '@/config/headerLinks'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslations } from 'next-intl'
@@ -36,7 +36,14 @@ const AppHeader = (props: Props) => {
 
   const changeLanguage = (language: string) => {
     const { pathname, asPath, query } = router
-      router.push({ pathname, query }, asPath, { locale: language })
+    let nextPath = asPath;
+    // const path = getLocaleLinkPath(asPath, language)
+    if (language === 'zh-Hans' && query.slug === 'Quick Start') {
+      nextPath = '/documents/快速开始'
+    } else if (language === 'en' && query.slug === '快速开始') {
+      nextPath = '/documents/Quick Start'
+    }
+    router.push({ pathname, query }, nextPath, { locale: language })
   }
   return (
     <Header
@@ -68,7 +75,7 @@ const AppHeader = (props: Props) => {
           {headerLinks.map((link) => {
             if (link.path[0] === '/' && !Array.isArray(link.path)) {
               return (
-                <Link href={link.path} key={link.key}>
+                <Link href={getLocaleLinkPath(link.key, link.path)} key={link.key}>
                   <a className="font-nunito inline-block md:px-5 text-center">
                     {t(link.key)}
                   </a>
@@ -107,7 +114,7 @@ const AppHeader = (props: Props) => {
             } else {
               return (
                 <a
-                  href={link.path}
+                  href={getLocaleLinkPath(link.key, link.path)}
                   key={link.key}
                   className="font-raleway inline-block md:px-5 text-center"
                   target="blank"

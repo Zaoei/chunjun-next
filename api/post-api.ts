@@ -5,6 +5,22 @@ import Items from '@/types/Item'
 
 export type LocaleType = 'zh-Hans' | 'en';
 
+export function getLocaleSlug(key: string, defaultPath: string, locale: LocaleType = 'zh-Hans'): string {
+  if (locale === "en") {
+    switch (key) {
+      case 'howContributing': return `Contribution${SEP}How to submit a great Pull Request`;
+      case 'howCustom': return `Contribution${SEP}How to define a plugin`;
+      default: return defaultPath;
+    }
+  } else {
+      switch (key) {
+        case 'howContributing': return `开发者指南${SEP}如何提交一个优秀的PR`;
+        case 'howCustom': return `开发者指南${SEP}如何自定义插件`;
+        default: return defaultPath;
+      }
+  }
+}
+
 //获取环境变量
 const SEP = process.env.sep as string
 export const ROOT_ZH = process.env.root_zh as string

@@ -1,9 +1,31 @@
+import { LocaleType } from "@/api/post-api"
+
 const SEP = process.env.sep as string
 
 export type headerLink = {
   name: string
   path: string | headerLink[]
   key: string
+}
+
+/**
+ * Translate the Link path to English version
+ * @param key The key field of Link object
+ * @param defaultPath The path filed of Link object
+ * @returns Return the translated path which matched by the key, if not return the defaultPath
+ */
+export function getLocaleLinkPath(key: string, defaultPath: string, locale: LocaleType = 'zh-Hans'): string {
+  if (locale === "en") {
+    switch (key) {
+      case 'documents': return `/documents/Quick Start`;
+      default: return defaultPath;
+    }
+  } else {
+      switch (key) {
+        case 'documents': return `/documents/快速开始`;
+        default: return defaultPath;
+      }
+  }
 }
 
 export const headerLinks: headerLink[] = [

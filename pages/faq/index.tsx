@@ -1,5 +1,5 @@
 import { markdownToHtml } from '@/utils/markdown2html'
-import { getPostBySlug, LocaleType } from '@/api/post-api'
+import { getLocaleSlug, getPostBySlug, LocaleType } from '@/api/post-api'
 import MDFileType from '@/types/MDFile'
 import PostBody from '@/components/PostBody'
 import AppFooter from '@/components/AppFooter'
@@ -87,13 +87,13 @@ const Faq = (props: Props) => {
 export default Faq
 
 export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
-  const post1 = getPostBySlug(`开发者指南${SEP}如何提交一个优秀的PR`, [
+  const post1 = getPostBySlug(getLocaleSlug('howContributing', `开发者指南${SEP}如何提交一个优秀的PR'}`, locale as LocaleType), [
     'slug',
     'content'
   ], locale as LocaleType)
   const md1 = await markdownToHtml(post1.content || '')
 
-  const post2 = getPostBySlug(`开发者指南${SEP}如何自定义插件`, [
+  const post2 = getPostBySlug(getLocaleSlug('howCustom', `开发者指南${SEP}如何自定义插件`, locale as LocaleType), [
     'slug',
     'content'
   ], locale as LocaleType)
