@@ -5,6 +5,14 @@ import Items from '@/types/Item'
 
 export type LocaleType = 'zh-Hans' | 'en';
 
+//获取环境变量
+const SEP = process.env.sep as string
+export const ROOT_ZH = process.env.root_zh as string
+export const ROOT_EN = process.env.root_en as string
+
+const postsDirectory = join(process.cwd(), ROOT_ZH)
+const postsDirectoryEN = join(process.cwd(), ROOT_EN)
+
 export function getLocaleSlug(key: string, defaultPath: string, locale: LocaleType = 'zh-Hans'): string {
   if (locale === "en") {
     switch (key) {
@@ -20,14 +28,6 @@ export function getLocaleSlug(key: string, defaultPath: string, locale: LocaleTy
       }
   }
 }
-
-//获取环境变量
-const SEP = process.env.sep as string
-export const ROOT_ZH = process.env.root_zh as string
-export const ROOT_EN = process.env.root_en as string
-
-const postsDirectory = join(process.cwd(), ROOT_ZH)
-const postsDirectoryEN = join(process.cwd(), ROOT_EN)
 
 // 读取文件
 export const getAllPaths = (root = ROOT_ZH, allFiles: string[] = []) => {
@@ -73,9 +73,9 @@ export function getPostBySlug(slug: string, fields: string[] = [], locale: Local
 }
 
 export function getAllPosts(fields: string[] = [], locale: LocaleType = 'zh-Hans') {
-  const root = locale === 'en' ? ROOT_EN : ROOT_ZH;
+  const rootPath = locale === 'en' ? ROOT_EN : ROOT_ZH;
 
-  const slugs = getAllPaths(root)
+  const slugs = getAllPaths(rootPath)
   const posts = slugs.map((slug) => getPostBySlug(slug, fields, locale))
 
   return posts
