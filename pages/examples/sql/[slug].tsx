@@ -4,6 +4,7 @@ import DocumentLike from '@/common/document-like'
 import FileTree from '@/types/FileTree'
 import Params from '@/types/Params'
 import { Prism } from '@mantine/prism'
+import { GetStaticPropsContext } from 'next'
 
 const SEP = process.env.sep as string
 
@@ -29,19 +30,29 @@ export default SqlExamples
 
 export const getStaticPaths = async () => {
   const sqlFiles = getAllSqlFiles()
-  return {
-    paths: sqlFiles.map((name) => {
-      return {
-        params: {
-          slug: name.slug.split('/').join(SEP)
-        }
+  const sqlCN = sqlFiles.map((name) => {
+    return {
+      params: {
+        slug: name.slug.split('/').join(SEP)
       }
-    }),
+    }
+  })
+  const sqlEN = sqlFiles.map((name) => {
+    return {
+      params: {
+        slug: name.slug.split('/').join(SEP)
+      },
+      locale: 'en'
+    }
+  })
+  
+  return {
+    paths: sqlCN.concat(sqlEN),
     fallback: false
   }
 }
 
-export const getStaticProps = async ({ params }: Params) => {
+export const getStaticProps = async ({ params, locale }: Params & GetStaticPropsContext) => {
   const sql = getSqlByName(params.slug)
 
   const allPaths = getAllSqlPaths()
@@ -50,7 +61,8 @@ export const getStaticProps = async ({ params }: Params) => {
   return {
     props: {
       sql: sql.content,
-      tree
+      tree,
+      messages: (await import(`../../../i18n/${locale}.json`)).default
     }
   }
 }

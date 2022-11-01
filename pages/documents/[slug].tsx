@@ -40,40 +40,37 @@ export default Post
 export async function getStaticPaths() {
   const posts = getAllPosts(['slug'])
   const postsEN = getAllPosts(['slug'], 'en');
-
-  const paths = posts.map((posts) => {
+  const paths = posts.map((post) => {
     return {
       params: {
-        slug: posts.slug.split('/').join(SEP),
+        slug: post.slug.split('/').join(SEP),
       }
     }
   })
 
-  const pathsEn = postsEN.map((posts) => {
+  const pathsEn = postsEN.map((post) => {
     return {
       params: {
-        slug: posts.slug.split('/').join(SEP),
-        locale: 'en'
-      }
+        slug: post.slug.split('/').join(SEP),
+      },
+      locale: 'en'
     }
   });
 
   return {
     paths: paths.concat(pathsEn),
-    fallback: true
+    fallback: false
   }
 }
 
 export async function getStaticProps({ params, locale }: Params & GetStaticPropsContext) {
-  console.log('getStaticProps', params, locale)
-  const rootPath = locale === 'en' ? ROOT_EN : ROOT_ZH;
+  debugger
   const post = getPostBySlug(params.slug, ['slug', 'content'], locale as LocaleType)
   const { content, toc } = await markdownToHtml(post.content || '')
   
+  const rootPath = locale === 'en' ? ROOT_EN : ROOT_ZH;
   const allPaths = getAllPaths(rootPath)
   const tree = generateTree(allPaths)
-
-  console.log('tree:', tree)
 
   return {
     props: {

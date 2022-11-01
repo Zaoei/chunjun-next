@@ -4,6 +4,7 @@ import DocumentLike from '@/common/document-like'
 import FileTree from '@/types/FileTree'
 import Params from '@/types/Params'
 import { Prism } from '@mantine/prism'
+import { GetStaticPropsContext } from 'next'
 
 const SEP = process.env.sep as string
 
@@ -29,19 +30,28 @@ export default JsonExamples
 
 export const getStaticPaths = async () => {
   const jsonFiles = getAllJsonFiles()
-  return {
-    paths: jsonFiles.map((name) => {
-      return {
-        params: {
-          slug: name.slug.split('/').join(SEP)
-        }
+  const pathCn = jsonFiles.map((name) => {
+    return {
+      params: {
+        slug: name.slug.split('/').join(SEP)
       }
-    }),
+    }
+  });
+  const pathEN = jsonFiles.map((name) => {
+    return {
+      params: {
+        slug: name.slug.split('/').join(SEP)
+      },
+      locale: 'en'
+    }
+  });
+  return {
+    paths: pathCn.concat(pathEN),
     fallback: false
   }
 }
 
-export const getStaticProps = async ({ params }: Params) => {
+export const getStaticProps = async ({ params, locale }: Params & GetStaticPropsContext ) => {
   const json = getJsonByName(params.slug)
 
   const allPaths = getAllJsonPaths()
@@ -50,7 +60,8 @@ export const getStaticProps = async ({ params }: Params) => {
   return {
     props: {
       json: json.content,
-      tree
+      tree,
+      messages: (await import(`../../../i18n/${locale}.json`)).default
     }
   }
 }
