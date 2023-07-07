@@ -188,7 +188,7 @@ WHERE
 
 查询出来的数据示例：
 
-![image](/doc/LogMiner/LogMiner23.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner23.png)
 
 # ChunJun 如何使用 Logminer
 
@@ -238,7 +238,7 @@ ORDER BY
 
 查询出来的数据示例：
 
-![image](/doc/LogMiner/LogMiner21.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner21.png)
 
 注意：
 如果 Logminer 的处理速度比 Oracle 产生数据速度快，那么理论上 ChunJun 只需要加载日志组文件不需要加载归档日志文件，而 Logminer 加载文件会比较消耗资源，所以会先进行 RedoLog 文件的查找，如果本次查找的文件和上次的没有区别，说明 Logminer 不需要加载新的日志文件，只需要重新再从视图里查询数据即可
@@ -318,7 +318,7 @@ WHERE
 
 ChunJun 就是在一个循环里 执行上述 sql 语句查询数据。 查询日志文件，加载到 logminer，开启 logminer，读取数据，更新当前最新 SCN 号，当数据读取完毕，代表本次加载的日志文件加载完了，通过 SCN 号寻找后续日志文件，重复上述操作
 
-![image](/doc/LogMiner/LogMiner22.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner22.png)
 
 从  v$logmnr_contents 获取到数据之后，ChunJun 使用 net.sf.jsqlparser.parser.CCJSqlParserUtil 来解析 sql_redo 值
 获取到的 sql_redo 语句格式示例：

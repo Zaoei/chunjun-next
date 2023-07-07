@@ -23,13 +23,13 @@ server 的一个标准服务，作用是代理执行所有 sql 的自动化任�
 
 开启前：
 
-![image](/doc/SqlserverCDC/Sqlserver7.png)
+![image](/chunjun-next/doc/SqlserverCDC/Sqlserver7.png)
 
 开启后：
 
 EXEC sys.sp_cdc_enable_db;
 
-![image](/doc/SqlserverCDC/Sqlserver8.png)
+![image](/chunjun-next/doc/SqlserverCDC/Sqlserver8.png)
 
 我们首先观察 dbo 下新增了一张**systranschemas**表，**systranschemas**表用于跟踪事务发布和快照发布中发布的项目中的架构更改。
 
@@ -170,7 +170,7 @@ sp_cdc_enable_table
 
 开启后：
 
-![image](/doc/SqlserverCDC/Sqlserver9.png)
+![image](/chunjun-next/doc/SqlserverCDC/Sqlserver9.png)
 
 此时，cdc 下新增了一张名为 dbo*kudu_CT 的表，对于任意开启 CDC 的业务表而言，都会在其对应的 cdc schema 下创建一张格式为$schema*$table}\_CT 的表。
 
@@ -191,11 +191,11 @@ cdc。capture_instance \_CT 其中 capture_instance 是源表的架构名称和�
 
 **2、captured_columns：**
 
-![image](/doc/SqlserverCDC/Sqlserver10.png)
+![image](/chunjun-next/doc/SqlserverCDC/Sqlserver10.png)
 
 **3、change_tables：**
 
-![image](/doc/SqlserverCDC/Sqlserver11.png)
+![image](/chunjun-next/doc/SqlserverCDC/Sqlserver11.png)
 
 ### 4、采集原理
 
@@ -203,24 +203,24 @@ cdc。capture_instance \_CT 其中 capture_instance 是源表的架构名称和�
 
 对于 insert 和 delete 类型的数据变更，对于每一行变更都会在对应的${schema}_${table}\_
 CT 表中增加一行记录。对于 insert，id，user_id，name 记录的是 insert 之后的 value 值；对于 delete，id，user_id，name 记录的是 delete 之前的 value 值；
-![image](/doc/SqlserverCDC/Sqlserver12.png)
+![image](/chunjun-next/doc/SqlserverCDC/Sqlserver12.png)
 
 #### 2、update
 
 a、更新了主键 此时，SqlServer 数据库的做法是在同一事物内，先将原来的记录删除，然后再重新插入。 执行如下 SQL，日志表如图所示： UPDATE [dbo].[kudu] SET [id] = 2, [user_id] = '
 2', [name] = 'b' WHERE [id] = 1;
-![image](/doc/SqlserverCDC/Sqlserver13.png)
+![image](/chunjun-next/doc/SqlserverCDC/Sqlserver13.png)
 
 b、未更新主键
 此时，SqlServer 数据库的做法是直接更新字段信息。
 执行如下 SQL，日志表如图所示：
 UPDATE [dbo].[kudu] SET [user_id] = '3', [name] = 'c' WHERE [id] = 2;
 
-![image](/doc/SqlserverCDC/Sqlserver14.png)
+![image](/chunjun-next/doc/SqlserverCDC/Sqlserver14.png)
 
 #### 3、流程图
 
-![image](/doc/SqlserverCDC/SqlserverCdc流程图.png)
+![image](/chunjun-next/doc/SqlserverCDC/SqlserverCdc流程图.png)
 
 对于 ChunJun SqlServer CDC 实时采集插件，其基本原理便是以轮询的方式，循环调用 fn*cdc_get_all_changes*函数，获取上次结束时的 lsn 与当前数据库最大 lsn 值之间的数据。对于 insert/delete 类型的数据获取并解析一行，对于 update 类型获取并解析两行。解析完成后把数据传递到下游并记录当前解析到的数据的 lsn，为下次轮询做准备。
 

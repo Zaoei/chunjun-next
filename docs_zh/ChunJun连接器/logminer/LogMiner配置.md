@@ -16,7 +16,7 @@ select *
 from v$version;
 ```
 
-![image](/doc/LogMiner/LogMiner1.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner1.png)
 
 本章 Oracle 的版本如上图所示。
 
@@ -28,7 +28,7 @@ archive
 log list;
 ```
 
-![image](/doc/LogMiner/LogMiner2.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner2.png)
 
 图中显示`No Archive Mode`表示未开启日志归档。
 
@@ -52,7 +52,7 @@ ls -l
 chown -R 下图中的用户名:下图中的组名 /data/oracle/
 ```
 
-![image](/doc/LogMiner/LogMiner3.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner3.png)
 
 ```sql
 --配置归档日志保存的路径
@@ -94,7 +94,7 @@ database open;
 
 再次查询数据库归档模式，`Archive Mode`表示已开启归档模式，`Archive destination`表示归档日志储存路径。
 
-![image](/doc/LogMiner/LogMiner4.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner4.png)
 
 ### 4、配置日志组
 
@@ -105,7 +105,7 @@ SELECT *
 FROM v$log;
 ```
 
-![image](/doc/LogMiner/LogMiner5.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner5.png)
 
 如上图所示，日志组的默认数量为 2 组，大小为 4194304/1024/1024 = 4MB，这意味着日志大小每达到 4MB 就会进行日志组的切换，切换太过频繁会导致查询出错，因此需要增加日志组数量及大小。
 
@@ -116,7 +116,7 @@ SELECT *
 FROM v$logfile;
 ```
 
-![image](/doc/LogMiner/LogMiner6.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner6.png)
 
 如上图所示，默认路径为`/usr/lib/oracle/xe/app/oracle/flash_recovery_area/XE/onlinelog/`。
 
@@ -159,9 +159,9 @@ SELECT *
 FROM v$logfile;
 ```
 
-![image](/doc/LogMiner/LogMiner7.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner7.png)
 
-![image](/doc/LogMiner/LogMiner8.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner8.png)
 
 ### 5、检查是否安装 LogMiner 工具
 
@@ -221,14 +221,14 @@ user roma_logminer quota unlimited on users;
  FROM USER_ROLE_PRIVS;
 ```
 
-![image](/doc/LogMiner/LogMiner9.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner9.png)
 
 ```sql
 SELECT *
 FROM SESSION_PRIVS;
 ```
 
-![image](/doc/LogMiner/LogMiner10.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner10.png)
 
 至此，Oracle 10g 数据库 LogMiner 实时采集配置完毕。
 
@@ -242,7 +242,7 @@ select *
 from v$version;
 ```
 
-![image](/doc/LogMiner/LogMiner11.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner11.png)
 
 本章 Oracle 的版本如上图所示。
 
@@ -254,7 +254,7 @@ archive
 log list;
 ```
 
-![image](/doc/LogMiner/LogMiner12.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner12.png)
 
 图中显示`No Archive Mode`表示未开启日志归档。
 
@@ -302,7 +302,7 @@ database open;
 ```
 
 再次查询数据库归档模式，`Archive Mode`表示已开启归档模式，`Archive destination`表示归档日志储存路径。
-![image](/doc/LogMiner/LogMiner13.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner13.png)
 
 ### 4、检查是否安装 LogMiner 工具
 
@@ -362,14 +362,14 @@ user roma_logminer quota unlimited on users;
  FROM USER_ROLE_PRIVS;
 ```
 
-![image](/doc/LogMiner/LogMiner14.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner14.png)
 
 ```sql
 SELECT *
 FROM SESSION_PRIVS;
 ```
 
-![image](/doc/LogMiner/LogMiner15.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner15.png)
 
 至此，Oracle 11g 数据库 LogMiner 实时采集配置完毕。
 
@@ -383,7 +383,7 @@ select BANNER
 from v$version;
 ```
 
-![image](/doc/LogMiner/LogMiner16.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner16.png)
 
 本章 Oracle 的版本如上图所示。
 
@@ -395,7 +395,7 @@ archive
 log list;
 ```
 
-![image](/doc/LogMiner/LogMiner17.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner17.png)
 
 图中显示`No Archive Mode`表示未开启日志归档。
 
@@ -443,7 +443,7 @@ database open;
 ```
 
 再次查询数据库归档模式，`Archive Mode`表示已开启归档模式，`Archive destination`表示归档日志储存路径。
-![image](/doc/LogMiner/LogMiner18.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner18.png)
 
 ### 4、创建 LogMiner 角色并赋权
 
@@ -484,13 +484,13 @@ user roma_logminer quota unlimited on users;
  FROM USER_ROLE_PRIVS;
 ```
 
-![image](/doc/LogMiner/LogMiner19.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner19.png)
 
 ```sql
 SELECT *
 FROM SESSION_PRIVS;
 ```
 
-![image](/doc/LogMiner/LogMiner20.png)
+![image](/chunjun-next/doc/LogMiner/LogMiner20.png)
 
 至此，Oracle 12c 数据库 LogMiner 实时采集配置完毕。

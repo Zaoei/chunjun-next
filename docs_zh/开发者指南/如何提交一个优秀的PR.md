@@ -4,15 +4,15 @@
 
 ## 第一步：fork chunjun 到自己的 github 仓库
 
-![image](/doc/pr/pr1.png)
+![image](/chunjun-next/doc/pr/pr1.png)
 
 点击 fork 后就可以在自己仓库中看到以你名字命名的 chunjun 项目了：
 
-![image](/doc/pr/pr2.png)
+![image](/chunjun-next/doc/pr/pr2.png)
 
 ## 第二步：clone chunjun 到本地 IDE
 
-![image](/doc/pr/pr3.png)
+![image](/chunjun-next/doc/pr/pr3.png)
 
 ## 第三步：将 DTStack/chunjun 设置为本地仓库的远程分支 upstream
 
@@ -95,22 +95,22 @@ $ git push origin branch_name
 
 以笔者修复 kafka 写入过程中出现空指针问题为例，经过步骤四笔者已经把代码提交至笔者自己仓库的 master 分支
 
-![image](/doc/pr/pr4.png)
+![image](/chunjun-next/doc/pr/pr4.png)
 
 进入 chunjun 仓库页面，点击 Pull Request
 
-![image](/doc/pr/pr5.png)
+![image](/chunjun-next/doc/pr/pr5.png)
 
-![image](/doc/pr/pr6.png)
+![image](/chunjun-next/doc/pr/pr6.png)
 
 选择 head 仓库和 base 仓库以及相应的分支
 
-![image](/doc/pr/pr7.png)
+![image](/chunjun-next/doc/pr/pr7.png)
 
 填写 pr 信息，pr 信息应该尽量概括清楚问题的前因后果，如果存在对应 issue 要附加 issue 地址，保证问题是可追溯的
 
-![image](/doc/pr/pr8.png)
+![image](/chunjun-next/doc/pr/pr8.png)
 
-![image](/doc/pr/pr9.png)
+![image](/chunjun-next/doc/pr/pr9.png)
 
 PR 提交成功后需要一段时间代码 review，可以耐心等待一下项目维护者 review 后合入，或者在 PR 评论区艾特相关人员。

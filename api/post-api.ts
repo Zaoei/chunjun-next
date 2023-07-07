@@ -3,7 +3,7 @@ import { join } from 'path'
 import matter from 'gray-matter'
 import Items from '@/types/Item'
 
-export type LocaleType = 'zh-Hans' | 'en';
+export type LocaleType = 'zh' | 'en';
 
 //获取环境变量
 const SEP = process.env.sep as string
@@ -13,7 +13,7 @@ export const ROOT_EN = process.env.root_en as string
 const postsDirectory = join(process.cwd(), ROOT_ZH)
 const postsDirectoryEN = join(process.cwd(), ROOT_EN)
 
-export function getLocaleSlug(key: string, defaultPath: string, locale: LocaleType = 'zh-Hans'): string {
+export function getLocaleSlug(key: string, defaultPath: string, locale: LocaleType = 'zh'): string {
   if (locale === "en") {
     switch (key) {
       case 'howContributing': return `Contribution${SEP}How to submit a great Pull Request`;
@@ -49,7 +49,7 @@ export const getAllPaths = (root = ROOT_ZH, allFiles: string[] = []) => {
   return allFiles.filter((file) => file.includes('.md'))
 }
 
-export function getPostBySlug(slug: string, fields: string[] = [], locale: LocaleType = 'zh-Hans') {
+export function getPostBySlug(slug: string, fields: string[] = [], locale: LocaleType = 'zh') {
   const realSlug = slug.split(SEP).join('/').replace(/\.md$/, '')
   const rootPath = locale === 'en' ? postsDirectoryEN : postsDirectory;
   const fullPath = join(rootPath, `${realSlug}.md`)
@@ -72,7 +72,7 @@ export function getPostBySlug(slug: string, fields: string[] = [], locale: Local
   return items
 }
 
-export function getAllPosts(fields: string[] = [], locale: LocaleType = 'zh-Hans') {
+export function getAllPosts(fields: string[] = [], locale: LocaleType = 'zh') {
   const rootPath = locale === 'en' ? ROOT_EN : ROOT_ZH;
 
   const slugs = getAllPaths(rootPath)

@@ -14,15 +14,15 @@ export type headerLink = {
  * @param defaultPath The path filed of Link object
  * @returns Return the translated path which matched by the key, if not return the defaultPath
  */
-export function getLocaleLinkPath(key: string, defaultPath: string, locale: LocaleType = 'zh-Hans'): string {
+export function getLocaleLinkPath(key: string, defaultPath: string, locale: LocaleType = 'zh'): string {
   if (locale === "en") {
     switch (key) {
-      case 'documents': return `/documents/Quick Start`;
+      case 'documents': return `/documents/en/Quick Start`;
       default: return defaultPath;
     }
   } else {
       switch (key) {
-        case 'documents': return `/documents/快速开始`;
+        case 'documents': return `/documents/zh/快速开始`;
         default: return defaultPath;
       }
   }
@@ -36,7 +36,7 @@ export const headerLinks: headerLink[] = [
   },
   {
     name: '文档',
-    path: '/documents/快速开始',
+    path: '/documents/zh/快速开始',
     key: 'documents'
   },
   {
